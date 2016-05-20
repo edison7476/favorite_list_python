@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<title></title>
+</head>
+<body>
+	<!-- {{ user }} -->
+	<!-- {{session['id']}} -->
+	<h1>Welcome, {{user['name']|capitalize()}}</h1>  
+	<a href="/logout">Log Out</a>
+	 <div id ='wall' style="overflow:scroll; height:400px;" class="col-xs-12 col-sm-6 col-md-8">
+	 <!-- {{ quotes }} -->
+	 	<h3>Quotable Quotes</h3>
+	 	{% if quotes %}
+	 	<div class="jumbotron">
+	 	{% for quote in quotes %}
+	 	{% set flag = quote['flag'] %}
+	 	{% if flag == 0%}
+	 		<form action="/fav/{{ quote['id'] }}" method="POST">
+	 		<h4>{{ quote['writer']}}: {{ quote['quote'] }}</h4>
+	 		
+	 			<input type="submit" value="Add to my list">
+	 		</form>
+
+	 		<p>Posted by
+	 		 <a href="/user/{{quote['user_id']}}"> {{ quote['name']|capitalize()}}</a> 
+	 		quote[user_id] {{quote['user_id']}}</p>
+	 		<hr>
+	 	{% endif %}
+	 	{% endfor %}
+	 	</div>	
+	 	{% endif %}
+	 	
+	 </div>
+	
+	<div  id = 'wall' style="overflow:scroll; height:400px;" class="col-xs-12 col-sm-6 col-md-8">
+		<h3>Your Favorites</h3>
+		{% if quotes %}
+		<div class="jumbotron">
+	 	{% for quote in quotes %}
+	 	{% set flag = quote['flag'] %}
+	 	{% if flag == 1%}
+	 		<form action="/remove/{{ quote['id'] }}" method="POST">
+	 		<h4>{{ quote['writer']}}: {{ quote['quote'] }}</h4>
+	 		
+	 		<input type="submit" value="Remove from my list">
+	 		</form>
+	 		<p>Posted by 
+	 		<a href="/user/{{quote['user_id']}}">{{ quote['name']|capitalize()}}</a> 
+	 		quote[user_id] {{quote['user_id']}}</p>
+	 		<hr>
+	 	{% endif %}
+	 	{% endfor %}
+	 	</div>	
+	 	{% endif %}
+
+	</div>
+
+	<div class="col-xs-12 col-sm-6 col-md-8">
+	<form action="/add" method="POST">
+		Quoted By:<input name="writer" type="text">
+		<br>
+		<br>
+		<textarea name = 'msg' class="form-control" cols ="30"rows="5">
+			
+		</textarea>
+		<input type="submit" value="submit">
+	</form>
+
+	</div>
+
+
+</body>
+</html>

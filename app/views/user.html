@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+		<h1>User Page</h1>
+		<!-- {{ info }} -->
+		<a href="/quote">Dashoboard</a>
+		<a href="/logout">Log Out</a>
+		<h3>Posts by {{ info[0]['name']|capitalize() }}</h3>
+		<h3>Total Posts: {{ info|length }} </h3>
+		{% for quote in info %}
+		<h3><span style="color: red">{{ quote['writer'] }}:</span> {{ quote['quote'] }}</h3>
+		{% endfor %}
+</body>
+</html>
